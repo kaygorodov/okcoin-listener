@@ -7,8 +7,10 @@ import akka.stream.ActorMaterializer
 import akka.stream.scaladsl._
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.model.ws._
+import okcoin.listener.models._
+import spray.json._
 
-import scala.concurrent.{Promise, Future}
+import scala.concurrent.{Future, Promise}
 
 
 object Config {
@@ -31,8 +33,11 @@ object SingleWebSocketRequest {
         case _ => println("wrong match")
       }
 
+    import OkcoinJsonProtocol._
+
+    val subscribeMessage = APIMessage(Event.AddChanel, Channel.OK_SUB_SPOTCNY_BTC_KLINE_1MIN, Nil)
     val subscribeReq =
-      Source.single(TextMessage("{'event':'addChannel','channel':'ok_sub_spotcny_btc_kline_1min'}"))
+      Source.single(TextMessage(subscribeMessage.toJson.toString))
 
     // the Future[Done] is the materialized value of Sink.foreach
     // and it is completed when the stream completes
