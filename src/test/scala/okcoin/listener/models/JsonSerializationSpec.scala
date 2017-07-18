@@ -12,7 +12,7 @@ class JsonSerializationSpec extends FlatSpec {
     import OkcoinJsonProtocol._
 
     assert(
-      APIMessage(Event.AddChanel, Channel.OK_SUB_SPOTCNY_BTC_KLINE_1MIN, Nil).toJson.toString ==
+      ApiRequestMessage(Event.AddChanel, Channel.OK_SUB_SPOTCNY_BTC_KLINE_1MIN, Nil).toJson.toString ==
         """{"event":"addChannel","channel":"ok_sub_spotcny_btc_kline_1min"}"""
     )
   }

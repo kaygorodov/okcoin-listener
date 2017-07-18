@@ -17,7 +17,6 @@ object Config {
   val okcoinUrl: String = "wss://real.okcoin.com:10440/websocket/okcoinapi"
 }
 
-
 object SingleWebSocketRequest {
 
   def main(args: Array[String]) = {
@@ -35,7 +34,7 @@ object SingleWebSocketRequest {
 
     import OkcoinJsonProtocol._
 
-    val subscribeMessage = APIMessage(Event.AddChanel, Channel.OK_SUB_SPOTCNY_BTC_KLINE_1MIN, Nil)
+    val subscribeMessage = ApiRequestMessage(Event.AddChanel, Channel.OK_SUB_SPOTCNY_BTC_KLINE_1MIN, Nil)
     val subscribeReq =
       Source.single(TextMessage(subscribeMessage.toJson.toString))
 

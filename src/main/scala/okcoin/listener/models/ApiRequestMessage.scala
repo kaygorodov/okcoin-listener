@@ -39,13 +39,14 @@ object Channel {
       case _ => throw new IllegalArgumentException(s"$name is not correct channel")
     }
   }
-  //TODO add the rest to be added
+  //TODO the rest to be added
 }
 
-case class APIMessage(event: Event, channel: Channel, parameters: Seq[Parameter])
+case class ApiRequestMessage(event: Event, channel: Channel, parameters: Seq[Parameter])
+
 
 object OkcoinJsonProtocol extends DefaultJsonProtocol {
-  implicit val parameterFormat = jsonFormat2(Parameter)
+  implicit val parameterFormat = jsonFormat2(Parameter) // TODO parameters':{'api_key':'value1','secret_key':'value2'}
 
   implicit object ChannelJsonWriter extends RootJsonWriter[Channel] {
     override def write(c: Channel) = JsString(c.name)
@@ -55,8 +56,8 @@ object OkcoinJsonProtocol extends DefaultJsonProtocol {
     override def write(e: Event) = JsString(e.name)
   }
 
-  implicit object ApiMessageFormat extends RootJsonWriter[APIMessage] {
-    override def write(obj: APIMessage): JsValue = {
+  implicit object ApiRequestFormat extends RootJsonWriter[ApiRequestMessage] {
+    override def write(obj: ApiRequestMessage): JsValue = {
       JsObject(
         "event" -> obj.event.toJson,
         "channel" -> obj.channel.toJson
